@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development npm-run-all build server",
+    "dev": "npm-run-all build server",
     "dev:watch": "nodemon",
     "build": "npm-run-all clean transpile",
     "server": "node ./dist",
