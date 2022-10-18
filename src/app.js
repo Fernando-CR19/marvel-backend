@@ -21,4 +21,13 @@ app.get('/characters', async (req, res) => {
   }
 })
 
+app.post('/auth/signup', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    res.json({});
+  } catch (error) {
+    
+  }
+});
+
 export default app;
