@@ -2,6 +2,9 @@ import express from "express";
 import path from "path";
 import cookieParser from "cookie-parser";
 import { fetchApi } from "./api";
+import { userAlreadyExists } from "./auth";
+import { readDBAsync } from "./DB/db";
+import { writeDBAsync } from "./DB/db";
 
 const app = express();
 
@@ -24,9 +27,27 @@ app.get('/characters', async (req, res) => {
 app.post('/auth/signup', async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    res.json({});
-  } catch (error) {
     
+    const userExist = await userAlreadyExists({email });
+
+    if(userExist){
+      throw "Access is denied due to invalid credentials"
+    }
+    const db = await readDBAsync()
+    const lastAddedUser = db.users[db.users.length - 1]
+    const id = lastAddedUser ? lastAddedUser.id + 1 : 0;
+
+    const user = {
+      id,
+      email
+    };
+
+    db.users.push(user);
+
+    await writeDBAsync(db)
+
+  } catch (error) {
+    console.log(error);
   }
 });
 
