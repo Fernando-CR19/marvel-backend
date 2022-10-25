@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npm-run-all build server",
-    "start": "nodemon",
+    "dev:watch": "nodemon",
     "build": "npm-run-all clean transpile",
     "server": "node ./dist",
     "transpile": "babel ./src --out-dir dist",

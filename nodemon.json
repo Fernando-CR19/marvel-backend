@@ -3,5 +3,5 @@
 "watch": [
     "src/*"
 ],
-"ignore": []
+"ignore": ["src/db/db.json"]
 }
