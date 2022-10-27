@@ -14,6 +14,6 @@ const server = http.createServer(app);
  */
 setImmediate(() => {
   server.listen(3000, "0.0.0.0", () => {
-    console.log('Express server listening on %d, in %s mode /// Deu certo');
+    console.log('Deu certo');
   });  
 });

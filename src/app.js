@@ -5,7 +5,7 @@ import createError from "http-errors";
 
 import { checkIfIsAutenticated, logErrors } from "./middlewares";
 import { fetchApi } from "./api";
-import { singToken, userAlreadyExists } from "./auth";
+import { singToken, userAlreadyExists, verifyToken } from "./auth";
 import { readDBAsync } from "./DB/db";
 import { writeDBAsync } from "./DB/db";
 
@@ -57,6 +57,31 @@ app.post('/auth/signup', async (req, res, next) => {
     next(createError(401));
   }
 });
+
+
+app.post("/auth/signin", async (req, res, next) => {
+  try {
+    const { email } = req.body
+
+    const userExist = await userAlreadyExists({ email });
+
+    if(!userExist){
+      throw "Access is denied due to invalid credentials"
+    }
+
+    const access_token = singToken({ email });
+    res.status(200).json({access_token});
+
+  } catch (err) {
+    next(createError(401));
+  }
+})
+
+app.get("/private",checkIfIsAutenticated,(req,res,next) => {
+  console.log(req.query);
+  console.log(req.headers);
+  res.json({})
+})
 
 app.use(logErrors)
 
