@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
-export const singToken = (payload) => jwt.sign(payload, SECRET);
+const SECRET = "digitalcollege"
+export const singToken = (sub) => jwt.sign({ sub }, SECRET);
 
 export const verifyToken = (access_token) => {
     const decoded = jwt.verify(access_token, SECRET);
