@@ -17,7 +17,7 @@ app.use("/auth", auth)
 
 app.use((err, req, res, next) => {
   console.log("erro", err.message)
-  res.status(err?.statusCode || 500).json({ err: err.message })
+  res.status(err?.statusCode || 500).json({ err: err })
 })
 
 export default app;

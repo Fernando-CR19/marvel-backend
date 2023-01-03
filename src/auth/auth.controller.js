@@ -1,5 +1,5 @@
-import { userAlreadyExists } from "../auth";
 import { makeSalt, encryptPassword, singToken } from "./auth.service"
+import { Forbidden, Unathorized } from "../utils/http-error/http-error"
 import { User } from "../api/user/user.model"
 
 export const signInWithEmail = async (req, res, next) => {
@@ -30,7 +30,7 @@ export const signInWithEmail = async (req, res, next) => {
         })
 
     } catch (err) {
-        next(err)
+        next(new Unathorized())
     }
 };
 
@@ -70,6 +70,6 @@ export const signUpWithEmail = async (req, res, next) => {
         })
 
     } catch (err) {
-        next(err)
+        next(new Forbidden())
     }
 };
