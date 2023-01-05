@@ -9,10 +9,6 @@ export const CharacterSchema = new dynamoose.Schema({
         default: nanoid(),
         required: true,
     },
-    name: {
-        type: String,
-    },
-
 });
 
 export const Character = dynamoose.model("Character", CharacterSchema)
