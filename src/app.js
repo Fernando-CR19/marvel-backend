@@ -5,6 +5,7 @@ import cors from "cors";
 
 import auth from "./auth"
 import characters from "./api/character"
+import User from "./api/user";
 
 const app = express();
 app.use(cors())
@@ -16,6 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/auth", auth)
 app.use("/api/characters", characters)
+app.use("/api/user", User)
 
 app.use((err, req, res, next) => {
   console.log("erro", err.message)
