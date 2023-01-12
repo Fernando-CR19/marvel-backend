@@ -3,6 +3,9 @@ import { Unathorized } from "../utils/http-error/http-error";
 import { User } from "../api/user/user.model";
 
 export const authorization = async (req, res, next) => {
+
+console.log(req.headers.authorization)
+
     try {
         if (req.query.access_tokken) {
             req.headers.authorization = `Bearer ${req.query.access_tokken}`;
@@ -12,7 +15,7 @@ export const authorization = async (req, res, next) => {
             req.header.authorization = `Bearer ${req.cookies.access_tokken}`;
         };
 
-        const access_tokken = req.headers.authorization.split("")[1];
+        const access_tokken = req.headers.authorization.split(" ")[1];
         const decoded = verifyToken(access_tokken);
 
         req.user = await User.get(decoded.sub);

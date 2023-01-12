@@ -17,7 +17,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use("/auth", auth)
 app.use("/api/characters", characters)
-app.use("/api/user", User)
+app.use("/api/users", User)
 
 app.use((err, req, res, next) => {
   console.log("erro", err.message)

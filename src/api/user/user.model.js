@@ -20,6 +20,7 @@ export const UserSchema = new dynamoose.Schema({
         },
         required: true,
     },
+    avatar: String,
     _hashedPassword: String,
     _salt: String,
 });

@@ -1,7 +1,8 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 
-const SECRET = "digitalcollege"
+const SECRET = 'digitalcollege'
+
 export const singToken = (sub) => jwt.sign({ sub }, SECRET);
 
 export const verifyToken = (access_token) => {
@@ -17,4 +18,4 @@ export const encryptPassword = (plainPassword = "", salt = "") => {
     return crypto
         .pbkdf2Sync(plainPassword, salt, 100000, 64, "sha512")
         .toString("base64");
-}
+};

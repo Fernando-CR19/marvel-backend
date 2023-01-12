@@ -1,6 +1,7 @@
 import multer from "multer"
 import path from "path"
 import { nanoid } from "nanoid";
+import { User } from "./user.model";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -18,20 +19,30 @@ const upload = multer({ storage: storage }).single("avatar")
 
 export const avatar = (req, res, next) => {
     upload(req, res, (err) => {
-        if(err) {
+        if (err) {
+            console.log(err)
             next(err)
             return
         }
 
-        // s3 ou cloudinary
+        console.log(req.user)
 
-        res.json({
-           avatar: path.join(
+        const avatar = path.join(
             "/",
             path.basename(req.file.destination),
             "/",
             req.file.filename
-           ),
+        ).split("\\").join("/")
+
+        User.update(
+            { "id": req.user.id }, { avatar }
+        ).then(() => {
+            res.json({
+                avatar
+            })
+        }).catch((err) => {
+            console.log(err)
+            next(err)
         })
     })
 }
