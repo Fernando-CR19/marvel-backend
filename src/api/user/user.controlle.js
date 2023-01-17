@@ -47,14 +47,14 @@ export const avatar = (req, res, next) => {
     })
 }
 
-export const update = (req, res, next) => {
+export const update = async (req, res, next) => {
     try {
-        
+
         const user = req.user
         const name = req.body.name
         const phone = req.body.phone
 
-        const _user = User.update ({ id: req.user.id }, { name: name, phone: phone })
+        const _user = await User.update({ id: req.user.id }, { name: name, phone: phone })
 
         res.json({
             _user: {
