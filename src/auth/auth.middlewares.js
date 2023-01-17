@@ -4,8 +4,6 @@ import { User } from "../api/user/user.model";
 
 export const authorization = async (req, res, next) => {
 
-console.log(req.headers.authorization)
-
     try {
         if (req.query.access_tokken) {
             req.headers.authorization = `Bearer ${req.query.access_tokken}`;

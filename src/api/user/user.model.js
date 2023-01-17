@@ -12,6 +12,7 @@ export const UserSchema = new dynamoose.Schema({
     name: {
         type: String,
     },
+    phone: String,
     email: {
         type: String,
         index: {

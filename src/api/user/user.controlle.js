@@ -46,3 +46,25 @@ export const avatar = (req, res, next) => {
         })
     })
 }
+
+export const update = (req, res, next) => {
+    try {
+        
+        const user = req.user
+        const name = req.body.name
+        const phone = req.body.phone
+
+        const _user = User.update ({ id: req.user.id }, { name: name, phone: phone })
+
+        res.json({
+            _user: {
+                name: _user.name,
+                phone: _user.phone
+            }
+        })
+
+    } catch (err) {
+        console.log(err)
+        next(err)
+    }
+}

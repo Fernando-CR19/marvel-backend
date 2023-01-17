@@ -30,6 +30,7 @@ export const signInWithEmail = async (req, res, next) => {
         })
 
     } catch (err) {
+        console.log(err)
         next(new Unathorized())
     }
 };
@@ -77,8 +78,26 @@ export const signUpWithEmail = async (req, res, next) => {
 export const changePassword = async (req, res, next) => {
     try {
 
+        console.log(req.user)
+
+        const _hashedPassword = encryptPassword(req.body.password, req.user._salt)
+
+        if (req.body.newPassword?.length < 8) {
+            throw new Error("Password is short")
+        }
+
+        if (_hashedPassword !== req.user._hashedPassword) {
+            throw new Error("Password does not match")
+        }
+
+        const _newSalt = makeSalt();
+        const _newHashedPassword = encryptPassword(req.body.newPassword, _newSalt)
+
+        await User.update({ id: req.user.id }, { _salt: _newSalt, _hashedPassword: _newHashedPassword })
+
+        res.sendStatus(201)
     } catch (err) {
         console.log(err)
-        next(err)
+        next(new Unathorized())
     }
 }
